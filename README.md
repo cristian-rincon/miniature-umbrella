@@ -2,14 +2,29 @@
 
 This is a simple API that allows you to create and retrieve information about cars.
 
-## Requirements
+- [Car Info API](#car-info-api)
+  - [0. Requirements](#0-requirements)
+  - [1. Application](#1-application)
+    - [1.1 Running the app](#11-running-the-app)
+    - [1.2 API endpoints](#12-api-endpoints)
+      - [GET /cars/{car\_id}](#get-carscar_id)
+      - [POST /cars/](#post-cars)
+  - [1.3 Updating the app](#13-updating-the-app)
+  - [1.4 Stopping the app](#14-stopping-the-app)
+  - [2. CI/CD Pipeline](#2-cicd-pipeline)
+  - [3. Metrics and Monitoring](#3-metrics-and-monitoring)
+  - [4. Next steps](#4-next-steps)
+
+
+## 0. Requirements
 
 To use this app, you need to have Docker and Docker Compose installed on your system.
 
 - [Docker installation guide](https://docs.docker.com/get-docker/)
 - [Docker Compose installation guide](https://docs.docker.com/compose/install/)
 
-## Running the app
+## 1. Application
+### 1.1 Running the app
 
 To run the app, follow these steps:
 
@@ -33,9 +48,9 @@ docker-compose up
 
 4. Access the API in your web browser at `http://localhost`. You can use the `/docs` endpoint to access the Swagger UI and test the API.
 
-## API endpoints
+### 1.2 API endpoints
 
-### GET /cars/{car_id}
+#### GET /cars/{car_id}
 
 Retrieves information about a car with the given ID.
 
@@ -65,7 +80,7 @@ Content-Type: application/json
 }
 ```
 
-### POST /cars/
+#### POST /cars/
 
 Creates a new car with the given information.
 
@@ -103,7 +118,7 @@ Content-Type: application/json
 }
 ```
 
-## Updating the app
+## 1.3 Updating the app
 
 If you make changes to the app code, you can rebuild the Docker container and restart the app with the following command:
 
@@ -113,7 +128,7 @@ docker-compose up --build
 
 This will rebuild the app container and start the app with your updated code.
 
-## Stopping the app
+## 1.4 Stopping the app
 
 To stop the app, press `Ctrl + C` in the terminal where you started the `docker-compose up` command. This will stop and remove the app containers, but will leave the database volume intact (so your data will not be lost).
 
@@ -125,7 +140,26 @@ docker-compose down -v
 
 This will stop and remove the app containers, and also remove the database volume. This will delete all data stored in the database.
 
-## Metrics and Monitoring
+## 2. CI/CD Pipeline
+
+Pipelines for the Car Info API are orchestrated by GitHub Actions, making it easy to set up, customize, and automate CI/CD workflows. The `.github/workflows` folder in the Git repository contains two YAML files for CI/CD: `ci.yml` and `cd.yml`.
+
+`ci.yml` is used for continuous integration, which is the process of building, testing, and verifying the application code changes. This workflow is triggered automatically whenever changes are pushed to the Git repository. The workflow uses the following steps:
+
+- Reacts to pull requests sent to the repository
+- Sets up the necessary Python environment to run the tests
+- Runs the `pytest` test suite to check for errors or bugs
+- Sends a notification indicating whether the test suite passed or failed
+
+`cd.yml` is used for continuous deployment, which is the process of deploying the application changes to the production environment. This workflow is triggered manually by a member of the development team once the changes have passed all the tests. The workflow uses the following steps:
+
+- Checks out the latest version of the code
+- Builds a Docker image of the application code
+- Deploys the Docker image to a Kubernetes cluster (Not implemented yet)
+
+These pipelines can be customized to add additional tests, build steps, or deployment targets as required. With GitHub Actions, developers have easy access to a variety of powerful automation tools to help streamline the CI/CD process.
+
+## 3. Metrics and Monitoring
 
 1. Here are three additional metrics that are critical for understanding the health and performance of an end-to-end system:
     - Error Rate: This metric indicates the percentage of requests that are resulting in errors. A high error rate can indicate issues with application logic or third-party services, and can impact user experience and revenue.
@@ -140,7 +174,7 @@ This will stop and remove the app containers, and also remove the database volum
 
 5. A limitation that we might face is the overhead required to collect and store metrics at scale. Metrics can be resource-intensive and require significant storage and processing power to collect data across multiple systems. One approach to address this issue is to integrate metrics collection and analysis into the application code, which can reduce network overhead by avoiding a separate service call for metrics. Additionally, configuring selective sampling of metrics can help mitigate the scalability issue. However, selectively sampling metrics may lead to incomplete data collection and potential false decisions.
 
-## Next steps
+## 4. Next steps
 
 This app is a simple example of how to build a REST API with Python and FastAPI. It can be used as a starting point for building more complex applications. Here are some ideas for how to extend this app:
 
