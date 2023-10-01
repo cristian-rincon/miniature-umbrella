@@ -3,10 +3,15 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:postgres@db:5432/myappdb"  # point to the db service in the docker-compose.yml file
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-
-Base = declarative_base()
+try:
+    SQLALCHEMY_DATABASE_URL = "postgresql://postgres:postgres@db:5432/myappdb"  # point to the db service in the docker-compose.yml file
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
+    Base = declarative_base()
+except Exception as e:
+    print(e)
+    SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+    engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+    Base = declarative_base()
 
 class Car(Base):
     __tablename__ = "cars"

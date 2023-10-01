@@ -9,11 +9,7 @@ class CarInfoAPITest(unittest.TestCase):
     API_URL = "http://localhost/cars/"
 
     def setUp(self):
-        self.engine = create_engine('sqlite:///:memory:')
-        Session = sessionmaker(bind=self.engine)
-        self.db = Session()
-        Base.metadata.create_all(self.engine)
-        app.dependency_overrides[get_db] = lambda: self.db
+        ...
 
     def test_create_car(self):
         car = {
