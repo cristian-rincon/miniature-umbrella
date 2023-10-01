@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from loguru import logger
-from database import SessionLocal
-from models import Car, CarCreate, CarResponse
+from app.database import SessionLocal
+from app.models import Car, CarCreate, CarResponse
 
 app = FastAPI()
 
