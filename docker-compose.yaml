@@ -6,12 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - db
     environment:
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/myappdb"
-    command: uvicorn app.main:app --host 0.0.0.0 --port 80 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - ./app:/app
   db:
